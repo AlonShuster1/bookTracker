@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/add" method="POST">
+        <label>Enter a book name:</label>
+        <input type="text" name="newbook" placeholder="name of the book"><br><br>
+        <label>your opinion about the book:</label>
+        <textarea name="details" placeholder="opinion"></textarea><br><br>
+        <label>rate it:</label>
+        <input type="integer" name="rating" minimum="1" maximum="10" placeholder="1-10">
+    </form>
+
+    <p>
+        <%# if books exist, print them. %>
+        <% if (locals.books){ %>
+            <% books.forEach(book => { %>
+                title: <%= book.title %> <br>
+                details: <%= book.details %> <br>
+                rating: <%= book.rating %> <br><br><br>
+            <% }); %>
+        <%}else{%>
+            add above to show books
+        <%}%>
+    </p>
+
+    
+</body>
+</html>

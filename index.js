@@ -1,0 +1,80 @@
+import express from 'express';
+import pg from 'pg';
+
+const db = new pg.Client({
+  user: 'postgres',
+  password: '24685',
+  host: 'localhost',
+  port: 5432,
+  database: 'library',
+})
+
+/* inside pgAdmin:
+CREATE TABLE books(
+	id SERIAL PRIMARY KEY,
+	title VARCHAR(50) NOT NULL,
+    details VARCHAR(200),
+    rating smallint
+)
+INSERT INTO books (title, details, rating)
+VALUES ('harry potter', 'an excellent book', 10), 
+		('a Tale Of Two Cities', 'very good book', 8)
+*/
+
+await db.connect();
+
+async function updatebooklist(){
+    const books = await db.query(`SELECT * FROM books`);
+    let bookitems = []
+
+    books.rows.forEach(book => {
+    bookitems.push(book);
+});
+
+    return bookitems;
+}
+
+
+const app = express();
+const port = 3000;
+
+app.use(express.urlencoded({extended:true}));
+app.use(express.json());     
+app.use(express.static("public"));
+
+app.get('/', async (req, res) => {
+    const bookitems = await updatebooklist();
+    res.render('index.ejs', {
+        books:bookitems
+    });
+});
+
+app.post('/add', async (req, res)=>{
+    const newbook = req.body['newbook'];
+    const details = req.body['newbook'];
+    const rating = req.body['newbook'];
+
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+app.listen(port, ()=>{
+    console.log(`server running on port: ${port}`);
+});
