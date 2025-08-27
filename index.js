@@ -51,10 +51,16 @@ app.get('/', async (req, res) => {
 
 app.post('/add', async (req, res)=>{
     const newbook = req.body['newbook'];
-    const details = req.body['newbook'];
-    const rating = req.body['newbook'];
-
-})
+    const details = req.body['details'];
+    const rating = req.body['rating'];
+    try{
+        await db.query(`INSERT INTO books(title, details, rating) 
+            VALUES ($1,$2,$3)`, [newbook, details, rating]);
+    }catch(err){
+        console.log(err);
+    }
+    res.redirect('/');
+});
 
 
 
