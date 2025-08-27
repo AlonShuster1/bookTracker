@@ -62,6 +62,18 @@ app.post('/add', async (req, res)=>{
     res.redirect('/');
 });
 
+app.post('/delete', async (req, res)=>{
+    const deletedbook = req.body["deleteBookId"];
+    try{
+        await db.query(`DELETE FROM books WHERE id = $1`, [deletedbook]);
+    }
+    catch(err){
+        console.log(err);
+        console.log(deletedbook);
+    }
+    res.redirect('/');
+})
+
 
 
 

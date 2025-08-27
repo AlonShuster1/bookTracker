@@ -26,11 +26,19 @@
 
     <p>
         <%# if books exist, print them. %>
-        <% if (locals.books){ %>
+        <% if (locals.books.length != 0){ %>
             <% books.forEach(book => { %>
-                title: <%= book.title %> <br>
-                details: <%= book.details %> <br>
-                rating: <%= book.rating %> <br><br><br>
+                <div class="item">
+                    title: <%= book.title %> <br>
+                    details: <%= book.details %> <br>
+                    rating: <%= book.rating %> <br>
+                    <form action="/delete" method="POST">
+                    delete
+                    <input type="checkbox" onchange="if (this.checked) this.form.submit();" name="deleteBookId" value="<%= book.id %>">
+                </form>
+
+                </div>
+                
             <% }); %>
         <%}else{%>
             add above to show books
