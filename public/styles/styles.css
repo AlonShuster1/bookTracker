@@ -1,3 +1,60 @@
 div{
     margin-bottom: 30px;
 }
+
+.input-form{
+  display: flex;
+  flex-direction: column;     
+  gap: 10px;               
+  align-items: stretch;      
+  
+  
+  background: #D6DAC8;
+  padding: 16px;
+  max-width: 900px;           
+  border-radius: 8px;
+    
+
+}
+
+.inputbox{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.inputbox label{
+  font-weight: 600;
+}
+
+.inputbox textarea{
+  height: 80px;
+  border-radius: 5px;
+  border: 2px solid #ccc;
+}
+.inputbox input{
+    border-radius: 5px;
+    border: 2px solid #ccc;
+
+}
+
+
+
+.item{
+    background-color: #9CAFAA;
+    display: inline-block;
+    padding: 0 15px 15px 15px;
+    border-radius: 5%;
+    box-shadow: 0 8px 20px 5px rgba(0, 0, 0, 0.2);
+    margin: 10px;
+}
+
+button[type="submit"]{      
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 30%;
+  margin: 0 auto;
+  font-weight: 600;
+}
