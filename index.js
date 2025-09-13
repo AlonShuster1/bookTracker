@@ -1,21 +1,6 @@
 import express from 'express';
 import pg from 'pg';
 
-import dotenv from 'dotenv';
-dotenv.config();
-const isProd = process.env.NODE_ENV === 'production' || process.env.VERCEL;
-const connectionString =
-  process.env.DATABASE_URL ||
-  'postgres://postgres:24685@localhost:5432/library';
-const pool = new pg.Pool({
-  connectionString,
-  // Neon requires SSL in production. Locally you usually don't want SSL.
-  ssl: isProd ? { rejectUnauthorized: false } : false,
-});
-async function updatebooklist() {
-  const { rows } = await pool.query('SELECT * FROM books ORDER BY id DESC');
-  return rows;
-}
 
 
 const db = new pg.Client({
@@ -53,7 +38,7 @@ async function updatebooklist(){
 
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = 3000;
 
 app.set('view engine', 'ejs');
 
@@ -73,7 +58,7 @@ app.post('/add', async (req, res)=>{
     const details = req.body['details'];
     const rating = req.body['rating'];
     try{
-        await pool.query(`INSERT INTO books(title, details, rating) 
+        await db.query(`INSERT INTO books(title, details, rating) 
             VALUES ($1,$2,$3)`, [newbook, details, Number(rating)]);
     }catch(err){
         console.log(err);
@@ -84,7 +69,7 @@ app.post('/add', async (req, res)=>{
 app.post('/delete', async (req, res)=>{
     const deletedbook = req.body["deleteBookId"];
     try{
-        await pool.query(`DELETE FROM books WHERE id = $1`, [deletedbook]);
+        await db.query(`DELETE FROM books WHERE id = $1`, [deletedbook]);
     }
     catch(err){
         console.log(err);
